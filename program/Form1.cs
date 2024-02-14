@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Google.Cloud.Translation.V2;
+using RestSharp;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace ut
@@ -19,58 +21,67 @@ namespace ut
         String textToTranslate = "";
         String transliterated = "";
 
-        char[] alphabet =
-        {
-        //    0         1         2         3
-        '\u0627', '\u0628', '\u067E', '\u062A',
-        //    4         5         6         7 
-        '\u0679', '\u062B', '\u062C', '\u0686',
-        //    8         9        10        11
-        '\u062D', '\u062E', '\u062F', '\u0688',
-        //   12        13        14        15
-        '\u0630', '\u0631', '\u0691', '\u0632',
-        //   16        17        18        19
-        '\u0698', '\u0633', '\u0634', '\u0635',
-        //   20        21        22        23
-        '\u0636', '\u0637', '\u0638', '\u0639',
-        //   24        25        26        27
-        '\u063A', '\u0641', '\u0642', '\u06A9',
-        //   28        29        30        31
-        '\u06AF', '\u0644', '\u0645', '\u0646', 
-        //   32        33        34        35
-        '\u06BA', '\u0648', '\u06C1', '\u06BE',
-        //   36        37        38        39
-        '\u06CC', '\u06D2', '\u0626', '\u0621',
-        //  40
-           ' '
-        };
-
-        const int alphabetLen = 41;
-
-
         public Form1()
         {
             InitializeComponent();
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //label3.Text = "";
-            textBox1.Text = "";
-
-
-
+            button1.Enabled = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            translateText();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBox1.Text))
+            {
+                button1.Enabled = false;
+            }else{
+                textToTranslate = textBox1.Text;
+                button1.Enabled = true;
+            }
+        }
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+            textBox1.Clear();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "Enter text to translate here.";
+            button1.Enabled = false;
+            richTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            richTextBox1.Text = "Transliteration";
+            richTextBox2.Text = "Translation";
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = getQuote();
+            translateText();
+            button1.Enabled = false;
+
+        }
+
+        private void translateText()
+        {
             var client = TranslationClient.Create();
             var response = client.TranslateText(textToTranslate, LanguageCodes.Urdu, LanguageCodes.English);
-            
-            
-            transliterated = transliterate(response.TranslatedText, alphabet);
-            if(textBox1.Text == transliterated)
+
+
+            transliterated = transliterate(response.TranslatedText);
+            if (textBox1.Text == transliterated)
             {
                 richTextBox1.Text = "Translation error.";
                 richTextBox2.Text = "Translation error.";
@@ -83,16 +94,46 @@ namespace ut
                 richTextBox2.Text = response.TranslatedText;
 
             }
-
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        static string getQuote()
         {
-            textToTranslate = textBox1.Text;
+            string quote = "Error getting quote.";
+
+            string url = "https://api.quotable.io/random?maxLength=50";
+
+            var client = new RestClient(url);
+
+            var request = new RestRequest();
+
+            var response = client.Get(request);
+
+            string responseStr = response.Content.ToString();
+
+
+            // parse response for quote
+            string startFlag = "\"content\":\"";
+            string endFlag = "\",\"author\":";
+
+            // Find the index of the starting word
+            int startIndex = responseStr.IndexOf(startFlag);
+            if (startIndex != -1)
+            {
+                // Find the index of the ending word
+                int endIndex = responseStr.IndexOf(endFlag, startIndex + startFlag.Length);
+                if (endIndex != -1)
+                {
+                    // Get the substring between the starting and ending words
+                    quote = responseStr.Substring(startIndex + startFlag.Length,
+                        endIndex - startIndex - startFlag.Length).Trim();
+                    return quote;
+                }
+            }
+
+            return quote;
         }
 
-
-        static string transliterate(string inputStr, char[] inputArray)
+        static string transliterate(string inputStr)
         {
             string transliteratedStr = "";
             char inputChar = ' ';
@@ -292,7 +333,7 @@ namespace ut
                     // ے
                     case '\u06D2':
 
-                            transliteratedStr += 'e';
+                        transliteratedStr += 'e';
 
                         break;
                     // space
@@ -326,27 +367,6 @@ namespace ut
         }
 
 
-        private void CheckEnterKeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Return)
-            {
-                //MessageBox.Show("hello");
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = "";
-            richTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            richTextBox1.Text = "Transliteration";
-            richTextBox2.Text = "Translation";
-        }
     }
 
 }

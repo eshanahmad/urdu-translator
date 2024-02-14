@@ -38,6 +38,7 @@ namespace ut
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -46,7 +47,7 @@ namespace ut
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(43, 74);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(415, 58);
+            this.button1.Size = new System.Drawing.Size(250, 50);
             this.button1.TabIndex = 0;
             this.button1.Text = "Translate";
             this.button1.UseVisualStyleBackColor = false;
@@ -57,19 +58,20 @@ namespace ut
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.Location = new System.Drawing.Point(43, 33);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(319, 35);
-            this.textBox1.TabIndex = 2;
+            this.textBox1.Size = new System.Drawing.Size(394, 35);
+            this.textBox1.TabIndex = 9;
             this.textBox1.Text = "Enter text to translate here.";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckEnterKeyPress);
+            this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
             // 
             // richTextBox1
             // 
             this.richTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox1.Location = new System.Drawing.Point(43, 247);
+            this.richTextBox1.Location = new System.Drawing.Point(43, 236);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(415, 100);
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.Size = new System.Drawing.Size(500, 100);
             this.richTextBox1.TabIndex = 7;
             this.richTextBox1.Text = "Transliteration";
             // 
@@ -77,10 +79,11 @@ namespace ut
             // 
             this.richTextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.richTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox2.Location = new System.Drawing.Point(43, 141);
+            this.richTextBox2.Location = new System.Drawing.Point(43, 130);
             this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.ReadOnly = true;
             this.richTextBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.richTextBox2.Size = new System.Drawing.Size(415, 100);
+            this.richTextBox2.Size = new System.Drawing.Size(500, 100);
             this.richTextBox2.TabIndex = 8;
             this.richTextBox2.Text = "Translation";
             // 
@@ -90,7 +93,7 @@ namespace ut
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.Location = new System.Drawing.Point(43, 469);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(415, 58);
+            this.button2.Size = new System.Drawing.Size(500, 50);
             this.button2.TabIndex = 9;
             this.button2.Text = "Exit";
             this.button2.UseVisualStyleBackColor = false;
@@ -100,9 +103,10 @@ namespace ut
             // 
             this.button3.BackColor = System.Drawing.Color.DarkSeaGreen;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(368, 33);
+            this.button3.Location = new System.Drawing.Point(443, 33);
+            this.button3.Margin = new System.Windows.Forms.Padding(0);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(90, 40);
+            this.button3.Size = new System.Drawing.Size(100, 35);
             this.button3.TabIndex = 10;
             this.button3.Text = "Clear";
             this.button3.UseVisualStyleBackColor = false;
@@ -110,21 +114,37 @@ namespace ut
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(39, 350);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(437, 100);
+            this.label1.Size = new System.Drawing.Size(500, 100);
             this.label1.TabIndex = 11;
             this.label1.Text = resources.GetString("label1.Text");
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Location = new System.Drawing.Point(293, 74);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(250, 50);
+            this.button4.TabIndex = 12;
+            this.button4.Text = "Get Quote";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGreen;
-            this.ClientSize = new System.Drawing.Size(494, 554);
+            this.ClientSize = new System.Drawing.Size(578, 544);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -149,6 +169,7 @@ namespace ut
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button4;
     }
 }
 
