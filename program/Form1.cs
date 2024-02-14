@@ -60,7 +60,7 @@ namespace ut
         {
             textBox1.Text = "Enter text to translate here.";
             button1.Enabled = false;
-            richTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            richTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             richTextBox1.Text = "Transliteration";
             richTextBox2.Text = "Translation";
@@ -68,9 +68,18 @@ namespace ut
 
         private void button4_Click(object sender, EventArgs e)
         {
-            textBox1.Text = getQuote();
+            string recievedQuote = getQuote();
+
+            if(recievedQuote == "Error getting quote.")
+            {
+                recievedQuote = getQuote();
+            }
+
+            textBox1.Text = recievedQuote;
+
             translateText();
             button1.Enabled = false;
+
 
         }
 
@@ -90,7 +99,7 @@ namespace ut
             {
                 richTextBox1.Text = transliterated;
                 this.richTextBox2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-                richTextBox2.Font = new System.Drawing.Font("Noto Nastaliq Urdu", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                richTextBox2.Font = new System.Drawing.Font("Noto Nastaliq Urdu", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                 richTextBox2.Text = response.TranslatedText;
 
             }
@@ -328,6 +337,10 @@ namespace ut
                     //                    return 'i';
                     // bari ye
                     case '\u0626':
+                        transliteratedStr += "ai";
+                        break;
+                    // ؤ 
+                    case '\u0624':
                         transliteratedStr += "ai";
                         break;
                     // ے
