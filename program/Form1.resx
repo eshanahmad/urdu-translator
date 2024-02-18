@@ -119,9 +119,10 @@
   </resheader>
   <data name="label1.Text" xml:space="preserve">
     <value>Transliteration pronounciation rules:
-ط appears as a superscript letter over ت, د, and ر
+-ط appears as a superscript letter over ت, د, and ر
 which is romanized ṭ, ḍ, and ṛ, respectively.
-Letters with a line beneath them represent long consonants.
-Letters with a dot beneath them represent short consonants.</value>
+-Letters with a line beneath them represent long consonants.
+-Letters with a dot beneath them represent short consonants.
+-W can also be pronounced v, o, au or ū, depending on context.</value>
   </data>
 </root>

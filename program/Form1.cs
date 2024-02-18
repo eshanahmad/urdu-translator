@@ -16,8 +16,10 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ut
 {
+
     public partial class Form1 : Form
     {
+        bool firstEntry = true;
         String textToTranslate = "";
         String transliterated = "";
 
@@ -29,6 +31,7 @@ namespace ut
         private void Form1_Load(object sender, EventArgs e)
         {
             button1.Enabled = false;
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -48,7 +51,12 @@ namespace ut
         }
         private void textBox1_Enter(object sender, EventArgs e)
         {
-            textBox1.Clear();
+            if (firstEntry)
+            {
+                textBox1.Clear();
+                firstEntry = false;
+            }
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -59,6 +67,7 @@ namespace ut
         private void button3_Click(object sender, EventArgs e)
         {
             textBox1.Text = "Enter text to translate here.";
+            firstEntry = true;
             button1.Enabled = false;
             richTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -68,19 +77,21 @@ namespace ut
 
         private void button4_Click(object sender, EventArgs e)
         {
-            string recievedQuote = getQuote();
-
-            if(recievedQuote == "Error getting quote.")
+            bool quoteSuccessfullyRecieved = false;
+            string recievedQuote = "";
+            while(!quoteSuccessfullyRecieved)
             {
                 recievedQuote = getQuote();
+                if (recievedQuote != "Error getting quote.")
+                {
+                    quoteSuccessfullyRecieved = true;
+                }
             }
 
             textBox1.Text = recievedQuote;
 
             translateText();
             button1.Enabled = false;
-
-
         }
 
         private void translateText()
